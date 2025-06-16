@@ -1,0 +1,22 @@
+{
+  "name": "mentoring-exercises",
+  "version": "1.0.0",
+  "description": "Ćwiczenia z różnych zagadnień programistycznych",
+  "private": true,
+  "workspaces": [
+    "event-loop"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.11.19"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2"
+  }
+}
