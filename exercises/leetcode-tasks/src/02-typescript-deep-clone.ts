@@ -144,3 +144,5 @@ console.log(cloned1);
 //     cloned3.set instanceof Set &&
 //     cloned3.map instanceof Map
 // );
+
+export {};

@@ -75,3 +75,5 @@ const todo = {
 
 const result3 = pick(todo, ["title", "completed"]);
 console.log(result3); // { title: "Learn TypeScript", completed: false }
+
+export {};
