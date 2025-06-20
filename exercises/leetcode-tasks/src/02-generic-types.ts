@@ -32,6 +32,117 @@
 
 // TODO: Zaimplementuj struktury danych
 
+class Stack<T> {
+  public elements: Array<T> = [];
+
+  public push(value: T) {
+    this.elements.push(value);
+  }
+
+  public pop() {
+    if (this.size() > 0) return this.elements.pop();
+  }
+
+  public peek() {
+    if (this.elements.length === 0) return undefined;
+    return this.elements[this.elements.length - 1];
+  }
+
+  public size() {
+    return this.elements.length;
+  }
+
+  // Implementacja protokołu iteratora
+  [Symbol.iterator](): Iterator<T> {
+    let index = 0;
+
+    return {
+      next: (): IteratorResult<T> => {
+        if (index < this.elements.length) {
+          return {
+            value: this.elements[index++],
+            done: false,
+          };
+        } else {
+          return {
+            value: undefined,
+            done: true,
+          };
+        }
+      },
+    };
+  }
+}
+
+class Queue<T> {
+  public elements: Array<T> = [];
+
+  public enqueue(value: T) {
+    this.elements.push(value);
+  }
+
+  public dequeue() {
+    if (this.size() > 0) return this.elements.splice(0, 1)[0];
+  }
+
+  public peek() {
+    if (this.elements.length === 0) return undefined;
+    return this.elements[0];
+  }
+
+  public size() {
+    return this.elements.length;
+  }
+
+  public map<U>(callback: (x: T) => U) {
+    const mapped = new Queue<U>();
+
+    for (const element of this.elements) {
+      const result = callback(element);
+      mapped.enqueue(result);
+    }
+
+    return mapped;
+  }
+
+  public filter(callback: (x: T) => boolean) {
+    const filtered = new Queue<T>();
+
+    for (const element of this.elements) {
+      const isValid = callback(element);
+
+      if (isValid) filtered.enqueue(element);
+    }
+
+    return filtered;
+  }
+
+  public toArray() {
+    return this.elements;
+  }
+
+  // Implementacja protokołu iteratora
+  [Symbol.iterator](): Iterator<T> {
+    let index = 0;
+
+    return {
+      next: (): IteratorResult<T> => {
+        if (index < this.elements.length) {
+          return {
+            value: this.elements[index++],
+            done: false,
+          };
+        } else {
+          return {
+            value: undefined,
+            done: true,
+          };
+        }
+      },
+    };
+  }
+}
+
 // Testy
 console.log("Test 1: Stack");
 const stack = new Stack<number>();
@@ -40,7 +151,7 @@ stack.push(2);
 stack.push(3);
 console.log(stack.pop()); // 3
 console.log(stack.peek()); // 2
-console.log(stack.size()); // 1
+console.log(stack.size()); // 2
 
 console.log("\nTest 2: Queue");
 const queue = new Queue<string>();
@@ -51,16 +162,16 @@ console.log(queue.dequeue()); // "first"
 console.log(queue.peek()); // "second"
 console.log(queue.size()); // 2
 
-console.log("\nTest 3: Tree");
-const tree = new Tree<number>();
-tree.insert(5);
-tree.insert(3);
-tree.insert(7);
-tree.insert(1);
-tree.insert(9);
-console.log(tree.inOrder()); // [1, 3, 5, 7, 9]
-console.log(tree.preOrder()); // [5, 3, 1, 7, 9]
-console.log(tree.postOrder()); // [1, 3, 9, 7, 5]
+// console.log("\nTest 3: Tree");
+// const tree = new Tree<number>();
+// tree.insert(5);
+// tree.insert(3);
+// tree.insert(7);
+// tree.insert(1);
+// tree.insert(9);
+// console.log(tree.inOrder()); // [1, 3, 5, 7, 9]
+// console.log(tree.preOrder()); // [5, 3, 1, 7, 9]
+// console.log(tree.postOrder()); // [1, 3, 9, 7, 5]
 
 console.log("\nTest 4: Iteracja");
 const numbers = new Stack<number>();

@@ -50,11 +50,40 @@ function isValid(s: string): boolean {
   // - Pomyśl co się dzieje gdy napotkasz otwierający vs zamykający nawias
   // - Jak możesz dopasować otwierające nawiasy z odpowiadającymi im zamykającymi?
 
-  return false; // placeholder
-}
+  const pairs = {
+    "(": ")",
+    "[": "]",
+    "{": "}",
+  };
 
-// Przypadki testowe
-console.log("=== Testy Poprawnych Nawiasów ===");
+  const stack: Array<keyof typeof pairs> = [];
+
+  const letters = s.split("");
+
+  if (letters.length <= 1) {
+    return false;
+  }
+
+  letters.forEach((letter) => {
+    if (letter === "(" || letter === "[" || letter === "{") {
+      stack.push(letter);
+      return;
+    }
+
+    if (stack.length > 0) {
+      const lastFromStack = stack[stack.length - 1];
+      const isMatching = pairs[lastFromStack] === letter;
+
+      if (isMatching) {
+        stack.pop();
+      }
+    }
+  });
+
+  const isValid = stack.length === 0;
+
+  return isValid;
+}
 
 // Podstawowe przypadki testowe
 console.log('Test 1 - "()":', isValid("()")); // Oczekiwane: true
